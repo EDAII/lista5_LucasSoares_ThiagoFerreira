@@ -82,3 +82,24 @@ class TreeNode(object):
   
         # Retorna a raiz
         return y 
+
+    def getHeight(self, root): 
+        if not root: 
+            return 0
+  
+        return root.height 
+  
+    def getBalance(self, root): 
+        if not root: 
+            return 0
+  
+        return self.getHeight(root.left) - self.getHeight(root.right) 
+  
+    def preOrder(self, root): 
+  
+        if not root: 
+            return
+  
+        print("{0} ".format(root.val), end="") 
+        self.preOrder(root.left) 
+        self.preOrder(root.right) 
