@@ -46,3 +46,39 @@ class TreeNode(object):
             return self.leftRotate(root) 
   
         return root 
+
+    def leftRotate(self, z): 
+  
+        y = z.right 
+        T2 = y.left 
+  
+        # Realizar Rotação
+        y.left = z 
+        z.right = T2 
+  
+        # Atualizar altura da arvore
+        z.height = 1 + max(self.getHeight(z.left), 
+                         self.getHeight(z.right)) 
+        y.height = 1 + max(self.getHeight(y.left), 
+                         self.getHeight(y.right)) 
+  
+        # retorna a nova raiz
+        return y 
+
+        def rightRotate(self, z): 
+  
+        y = z.left 
+        T3 = y.right 
+  
+        # Realiza a rotação
+        y.right = z 
+        z.left = T3 
+  
+        # Atualiza a altura
+        z.height = 1 + max(self.getHeight(z.left), 
+                        self.getHeight(z.right)) 
+        y.height = 1 + max(self.getHeight(y.left), 
+                        self.getHeight(y.right)) 
+  
+        # Retorna a raiz
+        return y 
