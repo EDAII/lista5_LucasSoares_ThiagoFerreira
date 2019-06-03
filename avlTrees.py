@@ -1,77 +1,48 @@
-# Import a library of functions called 'pygame'
-import pygame
-from math import pi
+class TreeNode(object): 
+    def __init__(self, val): 
+        self.val = val 
+        self.left = None
+        self.right = None
+        self.height = 1
 
-# CORES
-BLACK = (0,0,0)
-WHITE = (255,255,255)
-BLUE = (0,0,255)
-GREEN = (0,255,0)
-RED = (255,0,0)
-GREY = (128,128,128)
-GREY31 = (79,79,79)
-GAINSBORO = (220,220,220)
+  class AVL_Tree(object): 
+   
+    def insert(self, root, key): 
+      
+        # Passo 1 - Executar normal BST 
+        if not root: 
+            return TreeNode(key) 
+        elif key < root.val: 
+            root.left = self.insert(root.left, key) 
+        else: 
+            root.right = self.insert(root.right, key) 
+  
+        # Passo 2 - Atualiza a altura do node pai
 
-# Initialize the game engine
-pygame.init()
-
-# Set the height and width of the screen
-size = [800, 600]
-screen = pygame.display.set_mode(size)
-
-pygame.display.set_caption("Arvore AVL")
-
-#Loop until the user clicks the close button.
-done = False
-clock = pygame.time.Clock()
-
-while not done:
-
-    clock.tick(10)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done=True
-
-    screen.fill(WHITE)
-
-    # Draw lines
-    pygame.draw.aaline(screen, GAINSBORO, [400, 100],[350, 175], True)
-    pygame.draw.aaline(screen, GAINSBORO, [400, 100],[450, 175], True)
-    pygame.draw.aaline(screen, GAINSBORO, [350, 175],[250, 250], True)
-    pygame.draw.aaline(screen, GAINSBORO, [350, 175],[350, 250], True)
-    pygame.draw.aaline(screen, GAINSBORO, [450, 175],[450, 250], True)
-    pygame.draw.aaline(screen, GAINSBORO, [450, 175],[550, 250], True)
-    pygame.draw.aaline(screen, GAINSBORO, [250, 250],[135, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [250, 250],[210, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [350, 250],[285, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [350, 250],[360, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [450, 250],[435, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [450, 250],[510, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [550, 250],[585, 325], True)
-    pygame.draw.aaline(screen, GAINSBORO, [550, 250],[660, 325], True)
-
-    # Draw a circle
-    pygame.draw.circle(screen, GAINSBORO, [400, 100], 25)#1
-    pygame.draw.circle(screen, GAINSBORO, [350, 175], 25)#2
-    pygame.draw.circle(screen, GAINSBORO, [450, 175], 25)#3
-    pygame.draw.circle(screen, GAINSBORO, [250, 250], 25)#4
-    pygame.draw.circle(screen, GAINSBORO, [350, 250], 25)#5
-    pygame.draw.circle(screen, GAINSBORO, [450, 250], 25)#6
-    pygame.draw.circle(screen, GAINSBORO, [550, 250], 25)#7
-    pygame.draw.circle(screen, GAINSBORO, [135, 325], 25)#8
-    pygame.draw.circle(screen, GAINSBORO, [210, 325], 25)#9
-    pygame.draw.circle(screen, GAINSBORO, [285, 325], 25)#10
-    pygame.draw.circle(screen, GAINSBORO, [360, 325], 25)#11
-    pygame.draw.circle(screen, GAINSBORO, [435, 325], 25)#12
-    pygame.draw.circle(screen, GAINSBORO, [510, 325], 25)#13
-    pygame.draw.circle(screen, GAINSBORO, [585, 325], 25)#14
-    pygame.draw.circle(screen, GAINSBORO, [660, 325], 25)#15
-
-
-    # Go ahead and update the screen with what we've drawn.
-    # This MUST happen after all the other drawing commands.
-    pygame.display.flip()
-
-# Be IDLE friendly
-pygame.quit()
+        root.height = 1 + max(self.getHeight(root.left), 
+                           self.getHeight(root.right)) 
+  
+        # Passo 3 - Get the balance factor 
+        balance = self.getBalance(root) 
+  
+        # Passo 4 - Se o Node for desbalanceado
+        # fazer os 4 casos de teste
+        # Case 1 - Esquerda Esquerda 
+        if balance > 1 and key < root.left.val: 
+            return self.rightRotate(root) 
+  
+        # Case 2 - Direita Direita 
+        if balance < -1 and key > root.right.val: 
+            return self.leftRotate(root) 
+  
+        # Case 3 - Esquerda Direita 
+        if balance > 1 and key > root.left.val: 
+            root.left = self.leftRotate(root.left) 
+            return self.rightRotate(root) 
+  
+        # Case 4 - Direita Esquerda 
+        if balance < -1 and key < root.right.val: 
+            root.right = self.rightRotate(root.right) 
+            return self.leftRotate(root) 
+  
+        return root 
