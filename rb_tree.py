@@ -12,6 +12,11 @@ A classic (not left-leaning) Red-Black Tree implementation, supporting addition 
 BLACK = 'BLACK'
 RED = 'RED'
 NIL = 'NIL'
+import unittest
+import random
+from datetime import datetime
+
+
 
 
 class Node:
@@ -529,3 +534,67 @@ class RedBlackTree:
             sibling = parent.right
             direction = 'R'
         return sibling, direction
+
+
+class RbTreePerformanceTests(unittest.TestCase):
+    NIL_LEAF = RedBlackTree.NIL_LEAF
+    def test_addition_performance(self):
+        """
+        Add 25,000 elements to the tree
+        """
+        possible_values = list(range(-100000, 100000))
+        elements = [random.choice(possible_values) for _ in range(25000)]
+        start_time = datetime.now()
+        tree = RedBlackTree()
+        for el in elements:
+            tree.add(el)
+        time_taken = datetime.now()-start_time
+        print(time_taken)
+        self.assertTrue(time_taken.seconds < 1)
+
+    def test_deletion_performance(self):
+        """
+        Delete 25,000 elements from the tree
+        """
+        possible_values = list(range(-100000, 100000))
+        elements = set([random.choice(possible_values) for _ in range(25000)])
+        # fill up the tree
+        tree = RedBlackTree()
+        for el in elements:
+            tree.add(el)
+        start_time = datetime.now()
+        for el in elements:
+            tree.remove(el)
+        time_taken = datetime.now()-start_time
+        print(time_taken)
+        self.assertTrue(time_taken.seconds < 1)
+
+    def test_deletion_and_addition_performance(self):
+        possible_values = list(range(-500000, 500000))
+        elements = list(set([random.choice(possible_values) for _ in range(25000)]))
+        first_part = elements[:len(elements)//2]
+        second_part = elements[len(elements)//2:]
+        deletion_part = first_part[len(first_part)//3:(len(first_part)//3)*2]
+        tree = RedBlackTree()
+        start_time = datetime.now()
+
+        # fill up the tree 1/2
+        for el in first_part:
+            tree.add(el)
+        # delete 1/2 of the tree
+        for del_el in deletion_part:
+            tree.remove(del_el)
+        for el in second_part:
+            tree.add(el)
+
+        time_taken = datetime.now()-start_time
+        print(time_taken)
+        self.assertTrue(time_taken.seconds < 1)
+
+rbtree = RbTreePerformanceTests()
+print("Performance de Adição")
+rbtree.test_addition_performance()
+print("Performance de Subtração")
+rbtree.test_deletion_performance()
+print("Performance de Adição e Subtração")
+rbtree.test_deletion_and_addition_performance()

@@ -4,8 +4,9 @@ class TreeNode(object):
         self.left = None
         self.right = None
         self.height = 1
+        self.root = None
 
-  class AVL_Tree(object): 
+class AVL_Tree(object): 
    
     def insert(self, root, key): 
       
@@ -47,7 +48,7 @@ class TreeNode(object):
   
         return root 
 
-        def delete(self, root, key): 
+    def delete(self, root, key): 
   
         # Passo 1 - Perform standard BST delete 
         if not root: 
@@ -128,7 +129,7 @@ class TreeNode(object):
         # retorna a nova raiz
         return y 
 
-        def rightRotate(self, z): 
+    def rightRotate(self, z): 
   
         y = z.left 
         T3 = y.right 
@@ -166,3 +167,48 @@ class TreeNode(object):
         print("{0} ".format(root.val), end="") 
         self.preOrder(root.left) 
         self.preOrder(root.right) 
+
+myTree = AVL_Tree() 
+root = None
+nums = [9, 5, 10, 0, 6, 11, -1, 1, 2] 
+  
+for num in nums: 
+    root = myTree.insert(root, num) 
+  
+# Preorder Traversal 
+print("Preorder Traversal after insertion -") 
+myTree.preOrder(root) 
+print() 
+  
+# Delete 
+key = 10
+root = myTree.delete(root, key) 
+  
+# Preorder Traversal 
+print("Preorder Traversal after deletion -") 
+myTree.preOrder(root) 
+print() 
+
+# Driver program to test above function 
+myTree = AVL_Tree() 
+root = None
+  
+root = myTree.insert(root, 10) 
+root = myTree.insert(root, 20) 
+root = myTree.insert(root, 30) 
+root = myTree.insert(root, 40) 
+root = myTree.insert(root, 50) 
+root = myTree.insert(root, 25) 
+  
+"""The constructed AVL Tree would be 
+            30 
+           /  \ 
+         20   40 
+        /  \     \ 
+       10  25    50"""
+  
+# Preorder Traversal 
+print("Preorder traversal of the", 
+      "constructed AVL tree is") 
+myTree.preOrder(root) 
+print() 
